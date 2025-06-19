@@ -18,20 +18,28 @@ export function generateParticles(count, width, height) {
   return particles;
 }
 
+// Only interact with visible grid buttons and SlideInBox
 export function getBoxTops() {
-  const homeBox = document.querySelector(".bg-white.shadow-lg");
-  const draggableBox = document.getElementById("draggable-box");
   const tops = [];
-
-  if (homeBox && homeBox.offsetParent !== null) {
-    const rect = homeBox.getBoundingClientRect();
+  // All grid buttons (mobile)
+  document.querySelectorAll(".rain-hitbox").forEach((btn) => {
+    if (btn.offsetParent !== null) {
+      const rect = btn.getBoundingClientRect();
+      tops.push({ left: rect.left, right: rect.right, top: rect.top });
+    }
+  });
+  // SlideInBox (mobile)
+  const slideSheet = document.querySelector(".slide-in-sheet");
+  if (slideSheet && slideSheet.offsetParent !== null) {
+    const rect = slideSheet.getBoundingClientRect();
     tops.push({ left: rect.left, right: rect.right, top: rect.top });
   }
+  // Desktop draggable box (optional, if you use it)
+  const draggableBox = document.getElementById("draggable-box");
   if (draggableBox && draggableBox.style.display !== "none") {
     const rect = draggableBox.getBoundingClientRect();
     tops.push({ left: rect.left, right: rect.right, top: rect.top });
   }
-
   return tops;
 }
 

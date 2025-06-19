@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import useIsMobile from './hooks/useMobile';
+import MobileLayout from './components/mobileLayout';
 import RainCanvas from './components/RainCanvas';
 import WaveCanvas from './components/wavebackground';
 import EducationBox from './components/educationBox';
@@ -34,6 +36,24 @@ export default function App() {
       [boxId]: globalZ + 1,
     }));
   };
+
+    const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <MobileLayout
+        setShowAbout={setShowAbout}
+        setShowProject={setShowProject}
+        setShowWork={setShowWork}
+        setShowEducation={setShowEducation}
+        setShowLinks={setShowLinks}
+        nightMode={nightMode}
+        rainActive={rainActive}
+        setNightMode={setNightMode}
+        setRainActive={setRainActive}
+      />
+    );
+  }
 
   return (
     <div

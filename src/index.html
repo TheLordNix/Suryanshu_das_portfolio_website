@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+</head>
+<body style="background-color: #e0c28d; min-height: 100vh;">
+  <canvas id="rain-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:1;"></canvas>
+  <button id="toggle-rain" class="fixed top-4 right-4 z-50 bg-blue-700 text-white px-4 py-2 rounded shadow">
+    Toggle Rain
+  </button>
+  <div class="w-full min-h-screen flex flex-col items-center justify-center" style="position: relative; z-index: 10;">
+     <div class="bg-white p-0 rounded-2xl shadow-lg w-full max-w-3xl text-center overflow-hidden draggable" style="position: relative; z-index: 20;">
+      <div class="bg-black text-white py-4 px-8 font-semibold text-xl">
+        home
+      </div>
+      <div class="p-12 pb-16">
+        <h1 class="text-5xl font-bold text-gray-800 mt-6">
+          hi! <span class="text-orange-500">i'm Suryanshu</span>
+        </h1>
+        <p class="text-lg text-gray-600 mt-4">
+          a student and developer
+        </p>
+      </div>
+      <div class="flex justify-center gap-12 py-8">
+        <div class="flex flex-col items-center">
+          <img src="icon-about.svg" alt="About" class="w-12 h-12 toggle-education">
+          <p class="text-sm text-gray-700 mt-2 toggle-education" id="show-education">education</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="icon-links.svg" alt="Links" class="w-12 h-12">
+          <p class="text-sm text-gray-700 mt-2">links</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="icon-work.svg" alt="Work" class="w-12 h-12">
+          <p class="text-sm text-gray-700 mt-2">work</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="icon-faq.svg" alt="FAQ" class="w-12 h-12">
+          <p class="text-sm text-gray-700 mt-2">projects</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="icon-contact.svg" alt="Contact" class="w-12 h-12">
+          <p class="text-sm text-gray-700 mt-2">contact</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="draggable-box"
+      class="bg-white p-0 rounded-2xl shadow-lg max-w-3xl text-center overflow-hidden"
+      style="position: fixed; left: 400px; top: 100px; z-index: 999; display: none;">
+    <div id="topBar2"
+      class="bg-blue-800 text-white py-4 px-8 font-semibold text-xl"
+      style="cursor: grab;" draggable="true">
+      Second Box Top Bar
+    </div>
+    <div class="p-12 pb-16">
+      <h1 class="text-4xl font-bold text-gray-800 mt-6">
+        This is <span class="text-blue-500">Box 2</span>
+      </h1>
+      <p class="text-lg text-gray-600 mt-4">
+        another draggable area
+      </p>
+    </div>
+  </div>
+  <canvas id="wave-canvas" style="position:fixed;left:0;bottom:0;width:100vw;height:80px;z-index:2;pointer-events:none;"></canvas>
+</body>
+<script src="./script.js"></script>
+</html>

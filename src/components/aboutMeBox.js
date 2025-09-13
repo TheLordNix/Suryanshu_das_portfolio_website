@@ -1,56 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import pfp from './assets/pfp.jpg'; // adjust relative path as needed
+import React from "react";
+import pfp from './assets/pfp2.jpg';
+import useDraggable from "../hooks/useDraggable";
 
 const AboutMeBox = ({ show, setShow }) => {
-  const boxRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ left: 60, top: 30 });
-  const [zIndex, setZIndex] = useState(999);
-  const offset = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-
-      const newLeft = e.clientX - offset.current.x;
-      const newTop = e.clientY - offset.current.y;
-      setPosition({ left: newLeft, top: newTop });
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging]);
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    if (boxRef.current) {
-      const rect = boxRef.current.getBoundingClientRect();
-      offset.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    }
-    setIsDragging(true);
-
-    const allBoxes = document.querySelectorAll("[id='draggable-box']");
-    let maxZ = 999;
-    allBoxes.forEach((box) => {
-      const z = parseInt(window.getComputedStyle(box).zIndex) || 999;
-      if (z > maxZ) maxZ = z;
-    });
-    setZIndex(maxZ + 1);
-  };
+  const { boxRef, position, zIndex, onMouseDown } = useDraggable({ x: 60, y: 30 });
 
   if (!show) return null;
 
@@ -59,11 +12,11 @@ const AboutMeBox = ({ show, setShow }) => {
       id="draggable-box"
       ref={boxRef}
       className="bg-white p-0 rounded-2xl shadow-lg w-[800px] h-[450px] text-center overflow-hidden fixed"
-      style={{ left: `${position.left}px`, top: `${position.top}px`, zIndex }}
+      style={{ left: `${position.x}px`, top: `${position.y}px`, zIndex }}
     >
       <div
-        onMouseDown={handleMouseDown}
-        className="bg-[#1c1c1c] text-white py-4 px-4 font-semibold text-xl flex justify-between items-center cursor-null"
+        onMouseDown={onMouseDown}
+        className="bg-[#1c1c1c] text-white py-4 px-4 font-semibold text-xl flex justify-between items-center cursor-move"
       >
         <span>About</span>
         <button
@@ -71,8 +24,8 @@ const AboutMeBox = ({ show, setShow }) => {
             e.stopPropagation();
             setShow(false);
           }}
-          className="text-white text-lg font-bold hover:scale-110 transition-transform cursor-null"
-          aria-label="Close Education Box"
+          className="text-white text-lg font-bold hover:scale-110 transition-transform"
+          aria-label="Close About Me Box"
         >
           [x]
         </button>

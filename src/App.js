@@ -37,7 +37,7 @@ export default function App() {
     }));
   };
 
-    const isMobile = useIsMobile();
+  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
@@ -79,7 +79,10 @@ export default function App() {
       </div>
 
       <main className="w-full h-full flex flex-col items-center justify-center relative z-10 overflow-hidden">
-        <div className="bg-white rounded-2xl shadow-lg w-full max-w-3xl text-center overflow-hidden draggable relative z-20">
+        <div
+          id="home-box" 
+          className="bg-white rounded-2xl shadow-lg w-full max-w-3xl text-center overflow-hidden draggable relative z-20"
+        >
           <div className="bg-[#1c1c1c] text-white py-4 px-8 font-semibold text-xl text-left">
             Home
           </div>

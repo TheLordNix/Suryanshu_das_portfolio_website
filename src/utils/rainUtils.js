@@ -18,9 +18,10 @@ export function generateParticles(count, width, height) {
   return particles;
 }
 
-// Only interact with visible grid buttons and SlideInBox
+// Only interact with visible grid buttons, SlideInBox, draggable, and Home box
 export function getBoxTops() {
   const tops = [];
+
   // All grid buttons (mobile)
   document.querySelectorAll(".rain-hitbox").forEach((btn) => {
     if (btn.offsetParent !== null) {
@@ -28,18 +29,28 @@ export function getBoxTops() {
       tops.push({ left: rect.left, right: rect.right, top: rect.top });
     }
   });
+
   // SlideInBox (mobile)
   const slideSheet = document.querySelector(".slide-in-sheet");
   if (slideSheet && slideSheet.offsetParent !== null) {
     const rect = slideSheet.getBoundingClientRect();
     tops.push({ left: rect.left, right: rect.right, top: rect.top });
   }
-  // Desktop draggable box (optional, if you use it)
+
+  // Desktop draggable box
   const draggableBox = document.getElementById("draggable-box");
   if (draggableBox && draggableBox.style.display !== "none") {
     const rect = draggableBox.getBoundingClientRect();
     tops.push({ left: rect.left, right: rect.right, top: rect.top });
   }
+
+  // ✅ Main Home Box
+  const homeBox = document.getElementById("home-box");
+  if (homeBox && homeBox.style.display !== "none") {
+    const rect = homeBox.getBoundingClientRect();
+    tops.push({ left: rect.left, right: rect.right, top: rect.top });
+  }
+
   return tops;
 }
 

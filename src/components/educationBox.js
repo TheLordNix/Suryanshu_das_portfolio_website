@@ -1,50 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import MIS from './assets/MIS_logo.png';
 import RVCE from './assets/RVCE_logo.png';
+import useDraggable from "../hooks/useDraggable";
 
 const EducationBox = ({ show, setShow, zIndex, bringToFront }) => {
-  const boxRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ left: 700, top: 45 });
-  const offset = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-
-      const newLeft = e.clientX - offset.current.x;
-      const newTop = e.clientY - offset.current.y;
-      setPosition({ left: newLeft, top: newTop });
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging]);
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    bringToFront(); // 👉 Bring this box to the front
-    if (boxRef.current) {
-      const rect = boxRef.current.getBoundingClientRect();
-      offset.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    }
-    setIsDragging(true);
-  };
+  const { boxRef, position, zIndex: localZ, onMouseDown } = useDraggable({ x: 700, y: 45 });
 
   if (!show) return null;
 
@@ -52,17 +12,17 @@ const EducationBox = ({ show, setShow, zIndex, bringToFront }) => {
     <div
       id="draggable-box"
       ref={boxRef}
-      onMouseDown={bringToFront} // Also call bringToFront on box click
       className="bg-white p-0 rounded-2xl shadow-lg w-[650px] h-[400px] text-center overflow-hidden fixed"
       style={{
-        left: `${position.left}px`,
-        top: `${position.top}px`,
-        zIndex: zIndex || 1000,
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        zIndex: zIndex || localZ,
       }}
+      onMouseDown={bringToFront} // bring this box on top when clicked
     >
       <div
-        onMouseDown={handleMouseDown}
-        className="bg-[#1c1c1c] text-white py-4 px-4 font-semibold text-xl flex justify-between items-center cursor-null"
+        onMouseDown={onMouseDown}
+        className="bg-[#1c1c1c] text-white py-4 px-4 font-semibold text-xl flex justify-between items-center cursor-move"
       >
         <span>Education</span>
         <button
@@ -70,7 +30,7 @@ const EducationBox = ({ show, setShow, zIndex, bringToFront }) => {
             e.stopPropagation();
             setShow(false);
           }}
-          className="text-white text-lg font-bold hover:scale-110 transition-transform cursor-null"
+          className="text-white text-lg font-bold hover:scale-110 transition-transform"
           aria-label="Close Education Box"
         >
           [x]
@@ -88,46 +48,38 @@ const EducationBox = ({ show, setShow, zIndex, bringToFront }) => {
       </div>
 
       <ul className="space-y-4 pl-10 pr-8 pt-2 pb-4 h-[220px] overflow-y-auto text-left">
-        {/* Project 1 */}
+        {/* School */}
         <li className="flex items-start relative">
           <span className="absolute left-0 top-3 w-2 h-2 bg-gray-800 rounded-full"></span>
-
           <div className="ml-6 flex-grow">
-          <div className="font-semibold text-xl">Mother's International School, New Delhi (MIS)(2011-2024)</div>
+            <div className="font-semibold text-xl">
+              Mother's International School, New Delhi (MIS)(2011-2024)
+            </div>
             <ul className="list-disc list-inside text-lg mt-1 space-y-1">
               <li>CBSE X Grade: 90.8%</li>
               <li>CBSE XII Grade: 90.6% (PCM, 94%)</li>
             </ul>
           </div>
-
           <div className="w-48 h-36 ml-auto flex items-center justify-center">
-            <img
-              src={MIS}
-              alt="MIS"
-              className="max-w-full max-h-full"
-            />
+            <img src={MIS} alt="MIS" className="max-w-full max-h-full" />
           </div>
         </li>
 
-        {/* Project 2 */}
+        {/* College */}
         <li className="flex items-start relative">
           <span className="absolute left-0 top-3 w-2 h-2 bg-gray-800 rounded-full"></span>
-
           <div className="ml-6 flex-grow">
-            <div className="font-semibold text-xl">R.V. College of Engineering, Bengaluru</div>
+            <div className="font-semibold text-xl">
+              R.V. College of Engineering, Bengaluru
+            </div>
             <ul className="list-disc list-inside text-lg mt-1 space-y-1">
               <li>COMEDK: 809</li>
               <li>Computer Science Engineering - Cyber Security</li>
-              <li>CGPA: 8.95</li>
+              <li>CGPA: 8.98</li>
             </ul>
           </div>
-
           <div className="w-48 h-36 ml-auto flex items-center justify-center">
-            <img
-              src={RVCE}
-              alt="RVCE icon"
-              className="max-w-full max-h-full"
-            />
+            <img src={RVCE} alt="RVCE icon" className="max-w-full max-h-full" />
           </div>
         </li>
       </ul>

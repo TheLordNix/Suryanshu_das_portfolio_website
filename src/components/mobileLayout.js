@@ -4,11 +4,12 @@ import project from './assets/icon_project.png';
 import work from './assets/icon_work3.png';
 import edu from './assets/icon_edu2.png';
 import links from './assets/icon_links.png';
-import pfp from './assets/pfp.jpg';
+import pfp from './assets/pfp2.jpg';
 import MIS from './assets/MIS_logo.png';
 import RVCE from './assets/RVCE_logo.png';
 import sriaurobindo from './assets/SriAurobindoSociety_logo.png';
 import IISC from './assets/IISC_logo.png';
+import RTDS from './assets/rtds_logo.png';
 import ButtonToggle from './buttonToggle';
 import WaveCanvas from './wavebackground';
 import RainCanvas from './RainCanvas';
@@ -111,18 +112,17 @@ export default function MobileLayout({
         <div className="flex flex-col items-center text-left px-2 sm:px-4">
           <p className="mt-2 text-gray-700 text-base text-center">
             Work <span className="text-blue-500 text-lg">experience </span> shapes professionalism and decision-making. I'm grateful 
-            for opportunities that strengthened my problem-solving abilities, enhanced 
-            communication in real-world contexts, and taught the importance of accountability, 
-            time management, and delivering under pressure.
+            for opportunities that strengthened my core skills needed, enhanced 
+            communication in real-world contexts.
           </p>
           <ul className="space-y-4 pl-0 pr-0 mt-4">
             <li className="flex items-center relative">
               <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-gray-800 rounded-full"></span>
               <div className="ml-6 flex-1">
-                Student Teacher Assistant at Sri Aurobindo Society (Kechla)
+                IT Security Intern at RTDS Gurgaon
               </div>
               <div className="w-14 h-14 ml-auto flex items-center justify-center">
-                <img src={sriaurobindo} alt="Sri Aurobindo Society" className="max-w-full max-h-full" />
+                <img src={RTDS} alt="RTDS Gurgaon" className="max-w-full max-h-full" />
               </div>
             </li>
             <li className="flex items-center relative">
@@ -132,6 +132,15 @@ export default function MobileLayout({
               </div>
               <div className="w-14 h-14 ml-auto flex items-center justify-center">
                 <img src={IISC} alt="IISc Bengaluru" className="max-w-full max-h-full" />
+              </div>
+            </li>
+                        <li className="flex items-center relative">
+              <span className="absolute left-0 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-gray-800 rounded-full"></span>
+              <div className="ml-6 flex-1">
+                Student Teacher Assistant at Sri Aurobindo Society (Kechla)
+              </div>
+              <div className="w-14 h-14 ml-auto flex items-center justify-center">
+                <img src={sriaurobindo} alt="Sri Aurobindo Society" className="max-w-full max-h-full" />
               </div>
             </li>
           </ul>
@@ -170,7 +179,7 @@ export default function MobileLayout({
                 <ul className="list-disc list-inside text-base mt-1 space-y-1">
                   <li>COMEDK: 809</li>
                   <li>Computer Science Engineering - Cyber Security</li>
-                  <li>CGPA: 8.95</li>
+                  <li>CGPA: 8.98</li>
                 </ul>
               </div>
               <div className="w-14 h-14 ml-auto flex items-center justify-center">

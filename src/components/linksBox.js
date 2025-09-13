@@ -1,54 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import leetcode from './assets/leetcode_logo.png';
 import linkedin from './assets/linkedin_logo.png';
 import github from './assets/hithub_logo.png';
+import useDraggable from "../hooks/useDraggable";
 
-const LinkBox = ({ show, setShow }) => {
-  const boxRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ left: 980, top: 400 });
-  const [zIndex, setZIndex] = useState(999);
-  const offset = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging) return;
-      const newLeft = e.clientX - offset.current.x;
-      const newTop = e.clientY - offset.current.y;
-      setPosition({ left: newLeft, top: newTop });
-    };
-
-    const handleMouseUp = () => setIsDragging(false);
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging]);
-
-  const handleMouseDown = (e) => {
-    if (boxRef.current) {
-      const rect = boxRef.current.getBoundingClientRect();
-      offset.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    }
-    setIsDragging(true);
-
-    // Dynamic z-index update
-    const allBoxes = document.querySelectorAll("[id='draggable-box']");
-    let maxZ = 999;
-    allBoxes.forEach((box) => {
-      const z = parseInt(window.getComputedStyle(box).zIndex) || 999;
-      if (z > maxZ) maxZ = z;
-    });
-    setZIndex(maxZ + 1);
-  };
+const LinkBox = ({ show, setShow, zIndex, bringToFront }) => {
+  const { boxRef, position, zIndex: localZ, onMouseDown } = useDraggable({ x: 980, y: 400 });
 
   if (!show) return null;
 
@@ -57,12 +14,17 @@ const LinkBox = ({ show, setShow }) => {
       id="draggable-box"
       ref={boxRef}
       className="bg-white rounded-2xl shadow-xl w-[450px] h-[220px] text-center fixed overflow-hidden border border-gray-300"
-      style={{ left: `${position.left}px`, top: `${position.top}px`, zIndex }}
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        zIndex: zIndex || localZ,
+      }}
+      onMouseDown={bringToFront}
     >
       {/* Title Bar */}
       <div
-        onMouseDown={handleMouseDown}
-        className="bg-[#1c1c1c] text-white py-3 px-4 font-semibold text-xl flex justify-between items-center cursor-null"
+        onMouseDown={onMouseDown}
+        className="bg-[#1c1c1c] text-white py-3 px-4 font-semibold text-xl flex justify-between items-center cursor-move"
       >
         <span>Links</span>
         <button

@@ -98,10 +98,11 @@ const WorkBox = ({ show, setShow, zIndex, bringToFront }) => {
         </li>
 
         {/* Spacer for bottom breathing room */}
-        <div className="h-10"></div>
+        <div className="h-6"></div>
       </ul>
     </div>
   );
 };
 
 export default WorkBox;
+
